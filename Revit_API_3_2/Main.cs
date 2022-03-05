@@ -23,21 +23,29 @@ namespace Revit_API_3_2
 
             uidoc.RefreshActiveView();
 
-            IList<Reference> selectedElementRefList = uidoc.Selection.PickObjects(ObjectType.Element, new PipeFilter(), "Выберите трубы:");
-
-            var pipeList = new List<Element>();
-            double totLength = 0;
-
-            foreach (var selectedRef in selectedElementRefList)
+            try
             {
-                Pipe oPipe = doc.GetElement(selectedRef) as Pipe;
-                pipeList.Add(oPipe);
-                totLength += oPipe.LookupParameter("Length").AsDouble();
-                //totLength += oPipe.get_Parameter(BuiltInParameter.HOST_VOLUME_COMPUTED).AsDouble();
-            }
 
-            double totLenMeter = UnitUtils.ConvertFromInternalUnits(totLength, UnitTypeId.Meters);
-            TaskDialog.Show("Результат", $"Труб выбрано - {pipeList.Count}{Environment.NewLine}Общая длина выборки - {totLenMeter} м");
+                IList<Reference> selectedElementRefList = uidoc.Selection.PickObjects(ObjectType.Element, new PipeFilter(), "Выберите трубы:");
+
+                if (selectedElementRefList.Count>0)
+                {
+
+                var pipeList = new List<Element>();
+                double totLength = 0;
+
+                foreach (var selectedRef in selectedElementRefList)
+                {
+                    Pipe oPipe = doc.GetElement(selectedRef) as Pipe;
+                    pipeList.Add(oPipe);
+                    //totLength += oPipe.LookupParameter("Length").AsDouble();
+                    totLength += oPipe.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble();
+                }
+                double totLenMeter = Math.Round(UnitUtils.ConvertFromInternalUnits(totLength, UnitTypeId.Meters),2);
+                TaskDialog.Show("Результат", $"Труб выбрано - {pipeList.Count}{Environment.NewLine}Общая длина выборки - {totLenMeter} м");
+                }
+            }
+            catch { }
             return Result.Succeeded;
         }
     }
