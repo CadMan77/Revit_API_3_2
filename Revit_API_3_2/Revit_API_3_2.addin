@@ -5,6 +5,6 @@
 		<AddInId>16AAF797-80F6-44EC-852D-9CB4B6A0DFBC</AddInId>
 		<FullClassName>Revit_API_3_2.Main</FullClassName>
 		<VendorId>ADSK</VendorId>
-		<Text>RevitAPI 3-2</Text>
+		<Text>RevitAPI 3-2 Считывание значения параметра (длин выбранных труб)</Text>
 	</AddIn>
 </RevitAddIns>

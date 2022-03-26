@@ -1,4 +1,6 @@
-﻿using Autodesk.Revit.Attributes;
+﻿//Создайте приложение, которое выводит общую длину выбранных труб.
+
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
